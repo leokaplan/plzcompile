@@ -1,0 +1,26 @@
+#!/bin/bash
+empties=("Nothing?" "What is it?" "What are you trying to prove?" "Oh, look how ironic I am!" "So deep wow... Such existencialist" "Oh, what I'll get if compile nothing??" "Srlsly? How old are you?" )
+fails=("You know it is not good, right?" "Rs, try again" "Hmm... no." "Err... I'll have to ask, do you know what are you doing?" "Well... You'll have to excuse me" "Look, this is bad" "Hm. Sorry, I won't parse it" "Hahaha, this is not even computable!" "Are you even trying?")
+warnings=("Ok, Ok, this time, i'll do it... but, check it" "Look, I shouldn't, but..." "Please don't tell anyone that I compiled it" "I know I'm going to regret this" "You can do better, I know")
+passes=("OK" "If you insist..." "It's not good. But it's not bad either" "Why are you not always like that?" "If you can do it, do it always" "Do you even need me?" )
+if [ -z "$@" ]
+then
+    echo ${empties[$RANDOM % ${#empties[@]} ]}
+    exit 1
+fi
+    
+gcc "$@" &>/dev/null
+if [ $? -ne 0 ]
+then
+    echo ${fails[$RANDOM % ${#fails[@]} ]}
+    exit 1
+fi
+
+gcc -Wall -Werror "$@" &>/dev/null
+if [ $? -ne 0 ]
+then
+    echo ${warnings[$RANDOM % ${#warnings[@]} ]}
+    exit 2
+else
+    echo ${passes[$RANDOM % ${#passes[@]} ]}
+fi
